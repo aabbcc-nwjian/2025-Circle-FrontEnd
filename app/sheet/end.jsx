@@ -8,6 +8,7 @@ import { TextInput } from 'react-native';
 import myStory from '../datas';
 import { Get, Post } from '../axios';
 import Loading from '../loading';
+import { LinearGradient } from 'expo-linear-gradient';
 export default function Practice() {
   const navigation = useNavigation()
   const toReport=()=>{
@@ -15,12 +16,16 @@ export default function Practice() {
   }
 
   const sendcomment=async()=>{
-        const send=await Post('/test/commenttest',{
+    if (value) {
+      const send=await Post('/test/commenttest',{
           "testid":sheetid,
           "content":value
         })
         console.log(send);
         setValue('');
+    }else{
+      alert('请输入评论内容' )
+    }
     }
 
   const [should,setShould]=useState(false);
@@ -153,10 +158,10 @@ export default function Practice() {
     <View style={{marginTop:'5%',marginLeft:'8%'}}>
     <View style={styles.picture}></View>
     <View style={{position:'absolute',marginLeft:150}}>
-    <Text style={{fontSize:25,fontWeight:'bold'}}>{tests.Testname}</Text>
-    <Text style={{fontSize:18,marginTop:5}}>{users}</Text>
-    <View style={{flexDirection:'row'}}>
-    <Text style={{fontSize:16,marginTop:5}}>难度星数：</Text>
+    <Text style={{fontSize:25,fontWeight:'bold',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{tests.Testname}</Text>
+    <Text style={{fontSize:18,marginTop:5,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{users}</Text>
+    <View style={{flexDirection:'row',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>
+    <Text style={{fontSize:16,marginTop:5,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>难度星数：</Text>
     {/* <Image 
       source={star>=1?require('../img/pic18.png'):require('../img/pic19.png')}
       style={{width:15,height:15,marginTop:9}}
@@ -178,8 +183,8 @@ export default function Practice() {
       style={{width:15,height:15,marginTop:9,marginLeft:2}}
       />  */}
     </View>
-    <Text style={{fontSize:16,marginTop:5}}>#{tests.Circle}</Text>
-    <Text style={{fontSize:16,marginTop:5}}>{tests.Discription}</Text>
+    <Text style={{fontSize:16,marginTop:5,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>#{tests.Circle}</Text>
+    <Text style={{fontSize:16,marginTop:5,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{tests.Discription}</Text>
     </View>
     <View style={{position:'absolute',marginLeft:280,marginTop:50}}>
       <TouchableOpacity onPress={clickLove}>
@@ -187,42 +192,48 @@ export default function Practice() {
       source={love?require('../img/pic9.png'):require('../img/pic10.png')}
       style={{width:45,height:41,marginTop:'10%',marginLeft:'20%'}}
       />  
-      <Text style={{textAlign:'center',marginLeft:10}}>{tests.Good}</Text>
+      <Text style={{textAlign:'center',marginLeft:10,color:'#3D89FB',fontSize:20}}>{tests.Good}</Text>
       </TouchableOpacity>
     </View>
     </View>
 
 
     <View style={styles.box1}>
-      <View style={styles.score}>
-        <Text style={{fontSize:53,color:'#3D89FB',textAlign:'center',marginTop:5}}>{right*10}</Text>
+    <LinearGradient 
+    colors={['#A5C9FF','#E1ECFD']} 
+    start={{ x: 0, y: 0 }}
+    end={{ x: 0, y: 1 }}
+    style={{width:'100%',height:'100%'}}
+    >
+      <View style={{backgroundColor:'#F2F6FD',width:'30%',height:"25%",borderRadius:10,marginLeft:"35%",marginTop:20,elevation:3}}>
+        <Text style={{fontSize:50,color:'#3D89FB',textAlign:'center',margin:'auto',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{right*10}</Text>
       </View>
-      <View style={[styles.box2,{backgroundColor:'#F2F6FD'}]}>
+      <View style={[styles.box2,{backgroundColor:'#F2F6FD',elevation:3}]}>
         <Image 
         source={require('../img/pic14.png')}
         style={{width:35,height:30,marginTop:'5%',marginLeft:'8%'}}
         /> 
-      <Text style={{marginTop:15,fontSize:20,marginLeft:'5%'}}>排名</Text>
-      <Text style={{marginTop:15,fontSize:20,marginLeft:'35%'}}>{showtop}</Text>
+      <Text style={{marginTop:15,fontSize:20,marginLeft:'5%',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>排名</Text>
+      <Text style={{marginTop:15,fontSize:20,marginLeft:'35%',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{showtop}</Text>
       </View>
-      <View style={[styles.box2,{backgroundColor:'#9AC2FE'}]}>
+      <View style={[styles.box2,{backgroundColor:'#9AC2FE',elevation:3}]}>
       <Image 
         source={require('../img/pic15.png')}
         style={{width:33,height:33,marginTop:'5%',marginLeft:'8%'}}
         /> 
-      <Text style={{marginTop:15,fontSize:20,marginLeft:'5%',color:'white'}}>用时</Text>
-      <Text style={{marginTop:15,fontSize:20,marginLeft:'30%',color:'white'}}>22:22</Text>
+      <Text style={{marginTop:15,fontSize:20,marginLeft:'5%',color:'white',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>用时</Text>
+      <Text style={{marginTop:15,fontSize:20,marginLeft:'30%',color:'white',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>22:22</Text>
       </View>
-      <View style={[styles.box2,{backgroundColor:'#6CA6FD'}]}>
+      <View style={[styles.box2,{backgroundColor:'#6CA6FD',elevation:3}]}>
       <Image 
         source={require('../img/pic16.png')}
         style={{width:33,height:33,marginTop:'5%',marginLeft:'8%'}}
         /> 
-      <Text style={{marginTop:15,fontSize:20,marginLeft:'5%',color:'white'}}>详情</Text>
-      <Text onPress={toReport} style={{marginTop:18,fontSize:17,marginLeft:'20%',color:'white'}}>点击查看报告</Text>
+      <Text style={{marginTop:15,fontSize:20,marginLeft:'5%',color:'white',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>详情</Text>
+      <Text onPress={toReport} style={{marginTop:18,fontSize:17,marginLeft:'20%',color:'white',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>点击查看报告</Text>
       </View>
-    </View> 
-
+    </LinearGradient> 
+    </View>
       <View style={{marginLeft:25,marginRight:25}}>
 
       {/* <View style={{flexDirection:'row',position:'absolute',marginTop:20}}>
@@ -252,10 +263,10 @@ export default function Practice() {
 
     </ScrollView>
     <View style={{width:'100%',height:'10%'}}>
-      <View style={{width:'75%',height:'50%',marginLeft:'5%',marginTop:'5%',backgroundColor:'#D8D8D8',borderRadius:20,position:'absolute'}}></View>
-        <TextInput value={value} onChangeText={setValue} placeholder='理性发言，友善互动' style={{marginTop:'4%',marginLeft:'10%',fontSize:18,color:'#737576'}}></TextInput>
-      <TouchableOpacity style={{width:'10%',marginLeft:'85%',position:'absolute',marginTop:'6%'}}>
-      <Text onPress={sendcomment}>发布</Text>
+      <View style={{width:'70%',height:'60%',marginLeft:'5%',marginTop:'5%',backgroundColor:'#D8D8D8',borderRadius:15,position:'absolute'}}></View>
+        <TextInput value={value} onChangeText={setValue} placeholder='理性发言，友善互动' style={{marginTop:'5%',marginLeft:'10%',fontSize:18,color:'#737576',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}></TextInput>
+      <TouchableOpacity style={{width:'18%',marginLeft:'78%',position:'absolute',marginTop:'6%',height:'55%',backgroundColor:'#3083FE',elevation:0.5,borderRadius:15}}>
+      <Text style={{fontWeight: '700', fontFamily: 'Source Han Sans-Bold',fontSize:18,color:'white',margin:'auto'}} onPress={sendcomment}>发送</Text>
       </TouchableOpacity>
     </View>
     </View>
@@ -264,7 +275,7 @@ export default function Practice() {
 }
 const styles = StyleSheet.create({
   line: {
-    borderBottomWidth:1,
+    borderBottomWidth:0.5,
     borderColor:'gray'
   },picture:{
     width:140,
@@ -273,18 +284,18 @@ const styles = StyleSheet.create({
     borderRadius:15,
   },box1:{
     width:'80%',
-    height:430,
+    height:360,
     backgroundColor:'#3D89FB',
     borderRadius:15,
     marginTop:20,
-    marginLeft:'10%'
+    marginLeft:'10%',
+    overflow:'hidden',
+    elevation:2
   },score:{
     width:'30%',
     height:'20%',
     borderRadius:10,
     backgroundColor:'white',
-    marginLeft:'35%',
-    marginTop:'10%',
   },box2:{
     width:'90%',
     height:60,
@@ -299,7 +310,6 @@ const styles = StyleSheet.create({
     borderRadius:25,
     backgroundColor:'#D8D8D8',
     marginTop:5,
-    marginLeft:'5%'
   },content:{
     width:'80%',
     height:70,
@@ -328,8 +338,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 10 ,
     width:'60%',
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
+    fontSize:18
   },
-  scorelove: { 
+  score: { 
     marginTop: 15,
     marginLeft:'3%' 
   },
@@ -339,11 +352,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#D8D8D8',
     marginTop: 80,
     marginLeft: '15%',
-    borderRadius: 10 
+    borderRadius: 10 ,
   },
   contentText: { 
     marginTop:10,
-    marginLeft:10
+    marginLeft:10,
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
+    fontSize:16
   },
   commentFooter: { 
     marginTop: 20,
@@ -352,7 +368,7 @@ const styles = StyleSheet.create({
     marginLeft: '60%' 
   },
   reply: { 
-    marginLeft: '20%' ,
+    marginLeft: '15%' ,
     color:'#3083FE'
   },
 })

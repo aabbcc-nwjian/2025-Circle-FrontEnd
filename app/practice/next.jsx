@@ -26,12 +26,16 @@ export default function NextScreen() {
   const [optionColors,setOptionColors]=useState(['white', 'white', 'white', 'white'])
   const [value,setValue]=useState('')
   const sendcomment=async()=>{
-      const send=await Post('/practice/commentpractice',{
+    if (value) {
+     const send=await Post('/practice/commentpractice',{
         "practiceid":id,
         "content":value
       })
       console.log(send);
-      setValue('');
+      setValue(''); 
+    }else{
+      alert('请输入评论')
+    }
   }
 
   useEffect(() => {
@@ -69,8 +73,8 @@ export default function NextScreen() {
         }
       };
   
-      updateColor(answer2, 'red');
-      updateColor(answer1, 'green');
+      updateColor(answer2, '#FB5D5D');
+      updateColor(answer1, '#56D263');
 
       setOptionColors(newOptionColors);
       setShould2(true);
@@ -139,21 +143,21 @@ export default function NextScreen() {
   const renderOption = (option, index) => (
     <View key={option.Option} style={[styles.choose, { backgroundColor: optionColors[index] }]}>
       <View style={styles.optionContent}>
-        <Text>{option.Option}.</Text>
-        <Text>{option.Content}</Text>
+      <Text style={{fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{option.Option}.</Text>
+      <Text style={{fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{option.Content}</Text>
       </View>
     </View>
   );
   const renderOption0 = (option, index) => (
     <View key={option.Option} style={[styles.choose, { backgroundColor: optionColors[index] }]}>
       <View style={styles.optionContent}>
-        <Text>{option.Option}.</Text>
-        <Text>{option.Content}</Text>
+      <Text style={{fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{option.Option}.</Text>
+      <Text style={{fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{option.Content}</Text>
       </View>
     </View>
   );
 
-  const renderComment = ({ username, Content, date ,love,Commentid,head}) => (
+  const renderComment = ({ username, Content, Createtime,love,Commentid,head}) => (
     <View key={Commentid} style={styles.commentContainer}>
       <View style={styles.commentHeader}>
         <View style={styles.head}><Image source={{ uri: head }}/></View>
@@ -168,8 +172,8 @@ export default function NextScreen() {
         <Text style={styles.contentText}>{Content}</Text>
       </View>
       <View style={styles.commentFooter}>
-        <Text>{date}</Text>
-        {/* <Text style={styles.reply}>回复</Text> */}
+        <Text style={{fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:16,color:'#737576'}}>{Createtime.slice(0,10)}</Text>
+        <Text style={styles.reply}>回复</Text>
       </View>
     </View>
   );
@@ -180,7 +184,7 @@ export default function NextScreen() {
     <View style={styles.container}>
       <View style={{flexDirection:'row'}}>
         <Text style={{marginLeft:'5%',marginTop:'4%',position:'absolute'}} onPress={()=>{navigation.navigate('(tabs)')}}><FontAwesome size={35} name='angle-left'/></Text>
-        <Text style={{fontSize:18,textAlign:'center',width:"40%",marginLeft:'30%',marginTop:'5%'}}>练习场</Text>
+        <Text style={{fontSize:24,textAlign:'center',width:"40%",marginLeft:'30%',marginTop:'5%',fontFamily:'Source Han Sans-Bold',fontWeight:700}}>练习场</Text>
         <View style={{marginTop:'5%',marginLeft:'5%',flexDirection:'row'}}>
           <TouchableOpacity onPress={clickLove}>
           <Image 
@@ -199,12 +203,12 @@ export default function NextScreen() {
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={styles.questions}>
-            <Text style={{marginTop:10,marginLeft:'5%',marginRight:'5%'}}>
+            <Text style={{marginTop:10,marginLeft:'5%',marginRight:'5%',fontFamily:'Source Han Sans-Bold',fontWeight:700,color:'white',fontSize:16}}>
               {all.Content}
             </Text>
           </LinearGradient>
           <View style={styles.hard}>
-          <Text>难度星数</Text>
+          <Text style={{fontSize:14,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>难度星数</Text>
           <Image 
           source={star>=1?require('../img/pic18.png'):require('../img/pic19.png')}
           style={{width:15,height:15,marginTop:3,marginLeft:10}}
@@ -231,15 +235,15 @@ export default function NextScreen() {
         </View>
 
         <View style={styles.messageContainer}>
-        <View style={styles.message}>
+        <View style={[styles.message,{borderTopRightRadius:15,borderBottomRightRadius:15}]}>
           <Text style={styles.messageTitle}>出题人</Text>
           <Text style={styles.messageSubtitle}>{username}</Text>
         </View>
-        <View style={styles.message}>
+        <View style={[styles.message,{borderRadius:15}]}>
           <Text style={styles.messageTitle}>答题总人数</Text>
           <Text style={styles.messageSubtitle}>{zhanji.Peoplenum}</Text>
         </View>
-        <View style={styles.message}>
+        <View style={[styles.message,{borderTopLeftRadius:15,borderBottomLeftRadius:15}]}>
           <Text style={styles.messageTitle}>正确率</Text>
           <Text style={styles.messageSubtitle}>{average()}%</Text>
         </View>
@@ -251,10 +255,14 @@ export default function NextScreen() {
       </ScrollView>
 
       <View style={{width:'100%',height:'10%'}}>
-        <View style={{width:'75%',height:'50%',marginLeft:'5%',marginTop:'5%',backgroundColor:'#D8D8D8',borderRadius:20,position:'absolute'}}></View>
-          <TextInput value={value} onChangeText={setValue} placeholder='理性发言，友善互动' style={{marginTop:'4%',marginLeft:'10%',fontSize:18,color:'#737576'}}></TextInput>
-        <TouchableOpacity style={{width:'10%',marginLeft:'85%',position:'absolute',marginTop:'6%'}}>
-        <Text onPress={sendcomment}>发布</Text>
+        <View style={{width:'75%',height:'55%',marginLeft:'5%',marginTop:'5%',backgroundColor:'#D8D8D8',borderRadius:15,position:'absolute'}}>
+         <TextInput value={value} onChangeText={setValue} placeholder='理性发言，友善互动' style={{marginLeft:10,fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700,color:'#737576'}}></TextInput> 
+        </View>
+        <TouchableOpacity style={{width:'10%',marginLeft:'85%',position:'absolute',marginTop:'5%'}}>
+        <Text style={{fontSize: 16 ,
+        fontFamily:'Source Han Sans-Bold',
+        fontWeight:700,
+        marginTop:5}} onPress={sendcomment}>发布</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -315,7 +323,6 @@ const styles = StyleSheet.create({
   messageContainer: { 
     marginTop: '10%',
     flexDirection: 'row',
-    justifyContent: 'space-around' 
   },
   message: { 
     width: '33%',
@@ -326,13 +333,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     marginTop: 15,
-    fontSize: 16 
+    fontSize: 16 ,
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700
   },
   messageSubtitle: { 
     textAlign: 'center',
     color: 'white',
     marginTop: 10,
-    fontSize: 20 
+    fontSize: 20 ,
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700
   },
   commentContainer: { 
     marginLeft: '5%',
@@ -347,13 +358,15 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#D8D8D8',
-    marginLeft: '5%' 
+    backgroundColor: '#D8D8D8', 
   },
   username: { 
     marginTop: 15,
     marginLeft: 10 ,
     width:'60%',
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
+    fontSize:18
   },
   score: { 
     marginTop: 15,
@@ -365,11 +378,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#D8D8D8',
     marginTop: 80,
     marginLeft: '15%',
-    borderRadius: 10 
+    borderRadius: 10 ,
   },
   contentText: { 
     marginTop:10,
-    marginLeft:10
+    marginLeft:10,
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
+    fontSize:16
   },
   commentFooter: { 
     marginTop: 20,
@@ -378,7 +394,7 @@ const styles = StyleSheet.create({
     marginLeft: '60%' 
   },
   reply: { 
-    marginLeft: '20%' ,
+    marginLeft: '15%' ,
     color:'#3083FE'
   },
 });

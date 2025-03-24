@@ -4,6 +4,7 @@ import { useState ,useEffect} from 'react';
 import { TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 export default function SignScreen() { 
   const navigation = useNavigation();
 
@@ -20,6 +21,7 @@ export default function SignScreen() {
   }, [countdown]);
 
   const handleGetVerificationCode = () => {
+    if (email) {
     if (countdown === 0) {
       setCountdown(60);
       axios.post('http://112.126.68.22:8080/user/getcode',{"email":email})
@@ -29,26 +31,36 @@ export default function SignScreen() {
       .catch((error) => {
         console.log(error);
       });
+    }  
+    }else{
+      alert('请输入邮箱')
     }
+    
   };
   const [email , setEmail] = useState('')
   const [code , setCode] = useState('')
   const sendCode = ()=>{
-    axios.post('http://112.126.68.22:8080/user/checkcode',{"email":email,"code":code})
+    if (code) {
+     axios.post('http://112.126.68.22:8080/user/checkcode',{"email":email,"code":code})
       .then((response) => {
         navigation.navigate('setcipher', { email: email })
         console.log(response);
       })
       .catch((error) => {
         console.log(error);
-      });
+        alert('验证码错误')
+      }); 
+    }else{
+      alert('请输入验证码')
+    }
+    
   }
   return (
     <ImageBackground source={require('./img/bac.png')} style={{width:'100%',height:'100%'}}>
       
       <View style={{position:'absolute',marginTop:"20%",marginLeft:"12%"}}>
-        <Text style={{color:'white',fontSize:30}}>Hello!</Text>
-        <Text style={{color:'white',fontSize:18}}>欢迎来到圈圈</Text>
+        {/* <Text style={{color:'white',fontSize:30}}>Hello!</Text>
+        <Text style={{color:'white',fontSize:18}}>欢迎来到圈圈</Text> */}
       </View>
       
       
@@ -56,36 +68,45 @@ export default function SignScreen() {
       <View style={styles.container}>
       <View>
         <View style={styles.box}>
-          <Link style={{color:'#9A9898'}} href={'/'}>登录</Link>
+          <Link style={{color:'#9A9898',fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}} href={'login'}>登录</Link>
           <View style={styles.line}></View>
-          <Text>注册</Text>
+          <Text style={{fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>注册</Text>
         </View>
       </View>
       
       <View style={{marginTop:"15%",marginLeft:"10%"}}>
-      <View style={[styles.gray,{marginTop:'12%'}]}></View>  
-      <Text>邮箱</Text>
-      <TextInput value={email} onChangeText={setEmail} style={{marginTop:"3%"}} placeholder='请输入邮箱'></TextInput>
+      <Text style={{fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>邮箱</Text>
+      <View style={[styles.gray,{marginTop:'4%'}]}>
+       <TextInput value={email} onChangeText={setEmail} style={{fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginLeft:10,margin:'auto'}} placeholderTextColor={'#9A9898'} placeholder='请输入邮箱' ></TextInput> 
+      </View> 
       </View>
 
-      <View style={{marginTop:"6%",marginLeft:"10%"}}>
-      <View style={[styles.gray,{marginTop:'12%'}]}></View>  
-      <Text>验证码</Text>
-      <TextInput value={code} onChangeText={setCode} secureTextEntry style={{marginTop:"3%"}} placeholder='请输入验证码'></TextInput>
+      <View style={{marginTop:"4%",marginLeft:"10%"}}> 
+      <Text style={{fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>验证码</Text>
+      <View style={[styles.gray,{marginTop:'4%',flexDirection:'row'}]}>
+      <TextInput value={code} onChangeText={setCode} secureTextEntry style={{fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginLeft:10,margin:'auto'}} placeholder='请输入验证码' placeholderTextColor={'#9A9898'}></TextInput>
       <TouchableOpacity 
           onPress={handleGetVerificationCode}
           disabled={countdown > 0}
-          style={{position:'absolute', marginTop:"13%", marginLeft:'60%'}}
+          style={{marginLeft:'25%',margin:'auto'}}
         >
-          <Text style={{color: countdown > 0 ? 'gray' : 'blue'}}>
+          <Text style={{color: countdown > 0 ? 'gray' : '#3083FE',fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>
             {countdown > 0 ? `${countdown}s后重试` : '获取验证码'}
           </Text>
       </TouchableOpacity>
+      </View> 
       </View>
       
       <TouchableOpacity onPress={sendCode}>
-      <View style={styles.login}><Text style={{color:'white',textAlign:'center',marginTop:4}}>确认</Text></View>
+      <LinearGradient
+        colors={['#3083FE','#63A2FF','#A2C6FB']} 
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.login}>
+          <Text style={{color:'white',textAlign:'center',margin:'auto',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:18}}>确认</Text>
+      </LinearGradient>
       </TouchableOpacity>
+
     </View>  
     </ImageBackground>
     
@@ -94,37 +115,40 @@ export default function SignScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    width:"80%",
+    width:"84%",
     height:"60%",
     backgroundColor:'white',
-    borderRadius:10,
-    marginLeft:"10%",
-    marginTop:"45%",
+    borderRadius:15,
+    marginLeft:"8%",
+    marginTop:"40%",
+    elevation:8,
+    shadowColor: '#000',
   },login:{
     width:"80%",
-    height:30,
-    borderRadius:10,
+    height:40,
+    borderRadius:15,
     backgroundColor:'blue',
     marginTop:"20%",
     marginLeft:"10%",
   },gray:{
-    width:'90%',
-    height:30,
+    width:"90%",
+    height:40,
     borderRadius:10,
     backgroundColor:'#E5E5E5',
-    position:'absolute',
+    borderRadius:15
   },box:{
     flexDirection:'row',
     justifyContent:'space-evenly',
     marginTop:'8%',
     width:"100%"
   },line:{
-    width:25,
-    height:2,
+    width:15,
+    height:3,
     backgroundColor:'#3083FE',
     position:'absolute',
     marginTop:"7%",
-    marginLeft:"37%"
+    marginLeft:'39%',
+    borderRadius:10
   },agree:{
     width:8,
     height:8,

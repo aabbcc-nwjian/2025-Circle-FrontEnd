@@ -41,6 +41,7 @@ export default function Follow() {
         const userData = await Get('/circle/selectcircle');
         options.push(...userData.circle);
         setShow(options[0].Name)
+        console.log(options);
       } catch (error) {
         console.error(error);
       }
@@ -63,6 +64,7 @@ export default function Follow() {
   }
   const renderItem = ({ item, index }) => (
     <TouchableOpacity 
+      key={index}
       onPress={() => getShow(item.Name)}
       style={[
         styles.item, 
@@ -76,10 +78,11 @@ export default function Follow() {
     <View style={{width:'100%',height:'100%',backgroundColor:'#BBD4FE'}}>
     
     <View>
-    <View style={styles.choose}><Text style={{marginTop:10,marginLeft:20}}>{show}</Text><FontAwesome onPress={more?unMore:getMore} size={28} name={'angle-down'} style={{top:8,right:10,position:'absolute'}} /></View>
+    <View style={[styles.choose,!more&&{elevation:5,shadowColor: '#000000'}]}><Text style={{marginTop:8,marginLeft:20,fontWeight:700,fontSize:16}}>{show}</Text><FontAwesome onPress={more?unMore:getMore} size={28} name={'angle-down'} style={{top:8,right:10,position:'absolute'}} /></View>
     {more && (
           <View style={styles.more}>
             <FlatList
+              showsVerticalScrollIndicator={false}
               data={options}
               renderItem={renderItem}
               keyExtractor={item => item.Id.toString()}
@@ -136,7 +139,9 @@ const styles = StyleSheet.create({
   width:'45%',
   height:'25%',
   backgroundColor:'#3083FE',
-  borderRadius:20
+  borderRadius:20,
+  elevation:5,
+  shadowColor: '#000000',
   },box:{
   width:'80%',
   height:55,
@@ -144,7 +149,9 @@ const styles = StyleSheet.create({
   borderRadius:15,
   marginLeft:'10%',
   marginTop:"10%",
-  flexDirection:'row'
+  flexDirection:'row',
+  elevation:5,
+  shadowColor: '#000000',
   },choose:{
   width:120,
   height:40,
@@ -152,24 +159,26 @@ const styles = StyleSheet.create({
   borderRadius:20,
   marginTop:20,
   marginLeft:'5%',
-  zIndex:2
+  zIndex:2,
   },more:{
   width:120,
-  height:150,
+  height:180,
   backgroundColor:'white',
-  borderBottomLeftRadius:20,
-  borderBottomRightRadius:20,
+  borderRadius:20,
   marginLeft:'5%',
   position:'absolute',
-  marginTop:40,
-  zIndex:1
+  marginTop:20,
+  elevation:5,
+  shadowColor: '#000000',
+  zIndex:1,
   },item: {
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
   itemText: {
     fontSize: 16,
+    fontWeight:700
   },firstItem: {
-    marginTop: 20,
+    marginTop: 40,
   },
 })

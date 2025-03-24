@@ -29,7 +29,11 @@ export default function HomeScreen() {
   }
 
  const enter=(search)=>{
-  navigation.navigate('sheet',{'search':search})
+  if (search.length !== 0) {
+    navigation.navigate('sheet',{'search':search})
+  }else{
+    alert('搜索不能为空')
+  }
  }
 
  const render=(data)=>(
@@ -39,12 +43,12 @@ export default function HomeScreen() {
     </TouchableOpacity>
   </View>
  )
- if (should) {
+ if (history) {
   return (
     <View style={{backgroundColor:'white',height:'100%',width:'100%'}}>
         <View style={{flexDirection:'row'}}>
             <View style={styles.container}>
-                <FontAwesome onPress={()=> enter(value)} style={{marginTop:7,marginLeft:'10%',color:'#3D89FB'}} size={20} name="search" />
+                <FontAwesome onPress={()=> enter(value)} style={{marginTop:8,marginLeft:30,color:'#3D89FB'}} size={20} name="search" />
                 <TextInput
                 value={value}
                 onChangeText={setValue}
@@ -53,19 +57,18 @@ export default function HomeScreen() {
                 placeholder='输入关键词搜索卷子/圈子'
                 ></TextInput>
             </View>
-            <Link href={'shouye'} style={{marginTop:30,marginLeft:"5%"}}>取消</Link>
+            <Link href={'shouye'} style={{marginTop:30,marginLeft:"3%",fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>取消</Link>
         </View>
 
         <View style={{marginTop:20}}>
             <View style={{flexDirection:'row',justifyContent:'space-between',paddingLeft:'5%',paddingRight:'5%'}}>
-            <Text style={{fontSize:12}}>历史搜索</Text>
-            <Text onPress={dehistory} style={{fontSize:12}}>全部清除</Text>    
+            <Text style={{fontSize:14,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>历史搜索</Text>
+            <Text onPress={dehistory} style={{fontSize:14,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>全部清除</Text>    
             </View>
             
             <View style={{flexDirection:'row',marginTop:10,marginLeft:"5%",marginRight:"5%",flexWrap:'wrap'}}>
 
             {history.map(render)}
-
             </View>  
         </View>  
     </View>
@@ -80,14 +83,20 @@ const styles = StyleSheet.create({
     height:40,
     marginLeft:"3%",
     marginTop:20,
-    borderWidth:1,
-    borderRadius:10,
-    flexDirection:'row'
+    borderRadius:15,
+    flexDirection:'row',
+    elevation:10,
+    backgroundColor:'white',
   },input:{
     marginLeft:'5%',
+    fontSize:16,
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
+    color:'#3D89FB',
+    height:42
   },historyItem: {
-    height: 30,
-    backgroundColor: '#F0F0F0',
+    height: 23,
+    backgroundColor: '#D8D8D8',
     borderRadius: 15,
     marginRight: 10,
     marginBottom: 10,
@@ -96,6 +105,8 @@ const styles = StyleSheet.create({
 },
 historyText: {
     fontSize: 12,
+    fontWeight:700,
+    fontFamily:'Source Han Sans-Bold',
 }
 });
 

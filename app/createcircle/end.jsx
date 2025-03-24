@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
         fontSize:20,
         marginTop:'50%',
         textAlign:'center',
-        color:'white'
+        color:'white',
+        fontFamily:'Source Han Sans-Bold',fontWeight:700
     }
 })

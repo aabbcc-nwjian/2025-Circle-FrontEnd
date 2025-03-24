@@ -48,12 +48,13 @@ export default function HomeScreen() {
     if (datas) {
       const getByid=async(id1,id2,index)=>{
       const data =await Post('/user/getname',{"id":id1});
+      const head = await Post('user/getuserphoto',{"id":id1})
       const datalove =await Post('test/showlovetest',{"testid":id2})
       console.log(datalove);
       if (datalove.message == "已经点过赞") {
-        datas[index]={...datas[index],love:true}
+        datas[index]={...datas[index],love:true,head:head.success}
       }else{
-        datas[index]={...datas[index],love:false}
+        datas[index]={...datas[index],love:false,head:head.success}
       }
       console.log(index);
       return data;
@@ -79,12 +80,12 @@ export default function HomeScreen() {
   const [rightColumn, setRightColumn] = useState(); 
   useEffect(()=>{
     if (should) {
-      message.map(item => ({
+      const datas = message.map(item => ({
       ...item,
       height: Math.floor(Math.random() * 100) + 220, 
     }))    
-    setLeftColumn(message.filter((_, index) => index % 2 === 0));
-    setRightColumn(message.filter((_, index) => index % 2 !== 0)); 
+    setLeftColumn(datas.filter((_, index) => index % 2 === 0));
+    setRightColumn(datas.filter((_, index) => index % 2 !== 0)); 
     console.log(message);
     }
     },[message])
@@ -99,14 +100,16 @@ export default function HomeScreen() {
   const renderItem = (item,index) => (
       <View key={item.Testid} style={[styles.page, { height: item.height }]}>
         <TouchableOpacity /* onPress={()=>{setsheet(item.Testid)}} */>
-        <Image source={{ uri: item.image }} style={[styles.image, { height: item.height - 80 }]} />
+        <Image source={{ uri: item.Imageurl }} style={[styles.image, { height: item.height - 80 }]} />
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{item.Testname}</Text>
           <View style={styles.authorContainer}>
-            <View style={styles.avatar}></View>
+            <View style={styles.avatar}>
+              <Image source={{ uri: item.head }} style={{width:'100%',height:'100%'}} />
+            </View>
             <View>
-              <Text>{item.success}</Text>
-              <Text>{item.Circle}</Text>
+              <Text style={{fontSize:14,fontWeight:700,fontFamily:'Source Han Sans-Bold',color:'#3D3D3D'}}>{item.success}</Text>
+                <Text style={{fontSize:10,fontWeight:700,fontFamily:'Source Han Sans-Bold',color:'#737576'}}>#{item.Circle}</Text>
             </View>
             <TouchableOpacity onPress={()=>getlove(item.love,item.Testid)} style={styles.likeButton}>
               <Image 
@@ -129,7 +132,7 @@ if (leftColumn&&rightColumn) {
           <TextInput
             style={styles.input}
             placeholderTextColor={'#3D89FB'}
-            placeholder='关键词'
+            placeholder={search}
           />
         </View>
         <Text style={styles.cancelText} onPress={() => navigation.navigate('index')}>取消</Text>
@@ -164,25 +167,36 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 40,
     marginLeft: "3%",
-    borderWidth: 1,
-    borderRadius: 10,
+    elevation:10,
+    backgroundColor:'white',
+    borderRadius: 15,
     flexDirection: 'row',
-    alignItems: 'center',
   },
   searchIcon: {
-    marginLeft: 15,
-    color: '#3D89FB',
+    marginLeft:30,
+    color:'#3D89FB',
+    marginTop:8
   },
   input: {
-    marginLeft: '10%',
+    marginLeft: '5%',
     flex: 1,
+    fontSize:16,
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
+    color: '#3D89FB',
+    height:42
   },
   cancelText: {
     marginLeft: "5%",
+    fontSize:16,
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
   },
   tabContainer: {
     flexDirection: 'row',
     marginTop: '5%',
+    elevation:2,
+    backgroundColor:'white'
   },
   tab: {
     width: '50%',
@@ -195,14 +209,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#3D89FB",
   },
   tabText: {
-    fontSize: 18,
+    fontSize: 20,
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
   },
   activeTabText: {
-    fontSize: 18,
+    fontSize: 20,
     color: 'white',
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
   },
   scrollViewContent: {
     flexGrow: 1,
+    marginTop:10
   },
   columnsContainer: {
     flexDirection: 'row',
@@ -228,8 +247,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize:14,
+    fontFamily:'Source Han Sans-Bold',
+    fontWeight:700,
     marginBottom: 5,
   },
   authorContainer: {
@@ -242,6 +262,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: 'gray',
     marginRight: 10,
+    overflow:'hidden'
   },
   likeButton: {
     paddingHorizontal: 10,

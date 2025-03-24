@@ -7,7 +7,7 @@ import { useEffect ,useState} from 'react';
 import { Post } from '../axios';
 import Loading from '../loading';
 import { useRoute } from '@react-navigation/native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 export default function Practice() {
   const navigation = useNavigation()
   const route = useRoute();
@@ -41,6 +41,8 @@ export default function Practice() {
       setUsers(data1.success);
       setQuestions(data2.question);
       myStory.data['testname']=tests.Testname;
+      console.log(tests);
+      
     }
     getname();
     }
@@ -92,13 +94,18 @@ export default function Practice() {
     </View>
 
     <View style={{marginTop:'5%',marginLeft:'8%'}}>
-    <View style={styles.picture}></View>
+    <View style={styles.picture}>
+      <Image
+      source={{ uri: `https://${tests.Imageurl}` }}
+      style={{width:140,height:140,borderRadius:15}}
+      />
+    </View>
     <View style={{position:'absolute',marginLeft:150}}>
-    <Text style={{fontSize:25,fontWeight:'bold'}}>{tests.Testname}</Text>
-    <Text style={{fontSize:18,marginTop:5}}>{users}</Text>
-    <Text style={{fontSize:16,marginTop:5}}>难度星数：</Text>
-    <Text style={{fontSize:16,marginTop:5}}>#{tests.Circle}</Text>
-    <Text style={{fontSize:16,marginTop:5}}>{tests.Discription}</Text>
+    <Text style={{fontSize:25,fontWeight:'bold',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{tests.Testname}</Text>
+    <Text style={{fontSize:18,marginTop:5,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{users}</Text>
+    <Text style={{fontSize:16,marginTop:5,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>难度星数：</Text>
+    <Text style={{fontSize:16,marginTop:5,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>#{tests.Circle}</Text>
+    <Text style={{fontSize:16,marginTop:5,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{tests.Discription}</Text>
     </View>
     <View style={{position:'absolute',marginLeft:280,marginTop:50}}>
       <TouchableOpacity onPress={clickLove}>
@@ -106,33 +113,41 @@ export default function Practice() {
       source={love?require('../img/pic9.png'):require('../img/pic10.png')}
       style={{width:45,height:41,marginTop:'10%',marginLeft:'20%'}}
       />  
-      <Text style={{textAlign:'center',marginLeft:10}}>{tests.Good}</Text>
+      <Text style={{textAlign:'center',marginLeft:10,color:'#3D89FB',fontSize:20}}>{tests.Good}</Text>
       </TouchableOpacity>
     </View>
     </View>
 
 
     <View style={styles.box1}>
-      <Text style={{fontSize:25,fontWeight:'bold',marginLeft:'10%',marginTop:15}}>题型介绍</Text>
-      <View style={styles.box2}>
-        <Text style={{fontSize:18,marginTop:15,marginLeft:15,fontWeight:'bold'}}>ALL 总分</Text>
-        <Text style={{fontSize:18,marginTop:18,marginLeft:150,fontWeight:'bold'}}>{questions.length*10}</Text>
-      </View>
-      <View style={styles.box3}>
-      <View>
-        <Text style={[styles.questions,{fontSize:22}]}>类型</Text>
-      </View>
-      <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-        <Text style={styles.questions}>单选题</Text>
-        <Text style={styles.score}>{one*10}</Text>
-      </View>
-      <View style={{flexDirection:'row',justifyContent:'space-between'}}><Text style={styles.questions}>多选题</Text><Text style={styles.score}>{more}</Text></View>
-      <View style={{flexDirection:'row',justifyContent:'space-between'}}><Text style={styles.questions}>判断题</Text><Text style={styles.score}>{judge}</Text></View>
-      </View>
+      <LinearGradient 
+      colors={['#3083FE','#A5C9FF','#E1ECFD']} 
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+      style={{width:'100%',height:'100%'}}
+      >
+    <Text style={{fontSize:25,fontWeight: '700', fontFamily: 'Source Han Sans-Bold',marginLeft:'10%',marginTop:15}}>题型介绍</Text>
+          <View style={styles.box2}>
+            <Text style={{fontSize:18,marginTop:15,marginLeft:15,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>ALL 总分</Text>
+            <Text style={{fontSize:18,marginTop:18,marginLeft:150,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{questions.length*10}</Text>
+          </View>
+          <View style={styles.box3}>
+          <View>
+            <Text style={[styles.questions,{fontSize:22,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}]}>类型</Text>
+          </View>
+          <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+            <Text style={styles.questions}>单选题</Text>
+            <Text style={styles.score}>{one*10}</Text>
+          </View>
+          <View style={{flexDirection:'row',justifyContent:'space-between'}}><Text style={styles.questions}>多选题</Text><Text style={styles.score}>{more}</Text></View>
+          <View style={{flexDirection:'row',justifyContent:'space-between'}}><Text style={styles.questions}>判断题</Text><Text style={styles.score}>{judge}</Text></View>
+          </View>
+      </LinearGradient>
+      
     </View>
 
 
-    <View style={{marginLeft:'20%',marginTop:20,width:'60%'}}><Text style={{fontSize:25,textAlign:'center'}} onPress={toStart}>开始</Text></View>
+    <View style={{marginLeft:'20%',marginTop:20,width:'60%'}}><Text style={{fontSize:25,textAlign:'center',fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}} onPress={toStart}>开始</Text></View>
     </View>
   );
   }
@@ -153,7 +168,9 @@ const styles = StyleSheet.create({
     backgroundColor:'#3D89FB',
     borderRadius:15,
     marginTop:20,
-    marginLeft:'10%'
+    marginLeft:'10%',
+    elevation:3,
+    overflow:'hidden'
   },box2:{
     width:'90%',
     height:60,
@@ -161,23 +178,27 @@ const styles = StyleSheet.create({
     borderRadius:10,
     marginTop:15,
     marginLeft:'5%',
-    flexDirection:'row'
+    flexDirection:'row',
+    elevation:3,
   },box3:{
     width:'90%',
     height:265,
     backgroundColor:'blue',
     borderRadius:13,
     marginTop:15,
-    marginLeft:'5%'
+    marginLeft:'5%',
+    elevation:5,
   },questions:{
     color:'white',
     marginTop:20,
     marginLeft:80,
-    fontSize:16
+    fontSize:16,
+    fontWeight: '700', fontFamily: 'Source Han Sans-Bold'
   },score:{
     color:'white',
     marginTop:20,
     marginRight:15,
-    fontSize:16
+    fontSize:16,
+    fontWeight: '700', fontFamily: 'Source Han Sans-Bold'
   }
 })

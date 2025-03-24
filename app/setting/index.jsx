@@ -4,21 +4,24 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Link } from 'expo-router';
 import { Post , Get} from '../axios';
 import { TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Tab() {
   const navigation = useNavigation()
+  const router = useRouter();
   const toCipher=()=>{
     navigation.navigate('changecipher')
   }
+  const token = AsyncStorage.getItem('token');
   const delelogin = async()=>{
-    const data = await Get('/user/logout')
+    const data = await Get('/user/logout');
     console.log(data);
     AsyncStorage.setItem('token', null);
     navigation.navigate('login')
   }
   return (
     <View style={{}}>
-      <Text style={{margin:10}} onPress={()=>{navigation.goBack()}}><FontAwesome size={30} name='angle-left'/></Text>
+      <Text style={{margin:10}} onPress={() => router.push('/myself')}><FontAwesome size={30} name='angle-left'/></Text>
 
       <View style={{marginTop:15,marginLeft:10}}>
         <Text>账号与安全</Text>

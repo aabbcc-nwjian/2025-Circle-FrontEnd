@@ -3,6 +3,7 @@ import { useState , useEffect} from 'react';
 import { View, Text, StyleSheet, ImageBackground,Image, TextInput, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LinearGradient } from 'expo-linear-gradient';
 export default function LoginScreen() {
   const navigation = useNavigation();
   const successLogin = ()=>{
@@ -25,21 +26,26 @@ export default function LoginScreen() {
     }
   };
   const login = ()=>{
-    axios.post('http://112.126.68.22:8080/user/login',{"email":email,"password":password})
+    if (email&&password) {
+     axios.post('http://112.126.68.22:8080/user/login',{"email":email,"password":password})
     .then((response) => {
       storeToken(response.data.success)
       successLogin();
     })
     .catch((error) => {
       console.log(error);
-    });
+      alert('邮箱或密码错误');
+    }); 
+    }else{
+      alert('请输入邮箱和密码')
+    }
   }
   return (
     <ImageBackground source={require('./img/bac.png')} style={{width:'100%',height:'100%'}}>
       
-      <View style={{position:'absolute',marginTop:"20%",marginLeft:"12%"}}>
-        <Text style={{color:'white',fontSize:30}}>Hello!</Text>
-        <Text style={{color:'white',fontSize:18}}>欢迎来到圈圈</Text>
+      <View style={{position:'absolute',marginTop:"18%",left:"7%",marginLeft:5}}>
+        <Text style={{color:'white',fontSize:30,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>Hello!</Text>
+        <Text style={{color:'white',fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>欢迎来到圈圈</Text>
       </View>
 
 
@@ -47,28 +53,36 @@ export default function LoginScreen() {
       <View style={styles.container}>
       <View>
         <View style={styles.box}>
-          <Text>登录</Text>
+          <Text style={{fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>登录</Text>
           <View style={styles.line}></View>
-          <Link style={{color:'#9A9898'}} href={'/sign'}>注册</Link>
+          <Link style={{color:'#9A9898',fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}} href={'/sign'}>注册</Link>
         </View>
       </View>
       
 
-      <View style={{marginTop:"15%",marginLeft:"10%"}}>
-      <View style={[styles.gray,{marginTop:'12%'}]}></View>  
-      <Text>邮箱</Text>
-      <TextInput value={email} onChangeText={setEmail} style={{marginTop:"3%"}} placeholder='请输入邮箱'></TextInput>
+      <View style={{marginTop:"15%",marginLeft:"10%"}}>  
+      <Text style={{fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>邮箱</Text>
+      <View style={[styles.gray,{marginTop:'4%'}]}>
+      <TextInput value={email} onChangeText={setEmail} style={{fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginLeft:10,margin:'auto'}} placeholder='请输入邮箱' placeholderTextColor={'#9A9898'}></TextInput>  
+      </View>
       </View>
 
-      <View style={{marginTop:"6%",marginLeft:"10%"}}>
-      <View style={[styles.gray,{marginTop:'12%'}]}></View>
-      <Text>密码</Text>
-      <TextInput value={password} onChangeText={setPassword} style={{marginTop:"3%"}} placeholder='请输入密码'></TextInput>
+      <View style={{marginTop:"4%",marginLeft:"10%"}}>
+      <Text style={{fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>密码</Text>
+      <View style={[styles.gray,{marginTop:'4%'}]}>
+       <TextInput value={password} onChangeText={setPassword} style={{fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginLeft:10,margin:'auto'}} placeholder='请输入密码' placeholderTextColor={'#9A9898'}></TextInput> 
       </View>
-      <Link href={'/forget'} style={{marginLeft:'75%',fontSize:12,marginTop:'5%',color:'gray'}}>忘记密码</Link>
+      </View>
+      <Link href={'/forget'} style={{marginLeft:'73%',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:12,marginTop:5,color:'#3083FE'}}>忘记密码</Link>
       
       <TouchableOpacity onPress={login}>
-      <View style={styles.login}><Text style={{color:'white',textAlign:'center',marginTop:4}}>登录</Text></View>
+        <LinearGradient
+          colors={['#3083FE','#63A2FF','#A2C6FB']} 
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.login}>
+            <Text style={{color:'white',textAlign:'center',margin:'auto',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:18}}>登录</Text>
+        </LinearGradient>
       </TouchableOpacity>
       
 
@@ -76,9 +90,8 @@ export default function LoginScreen() {
       <View style={styles.agree}><Text onPress={agree?disAgree:getAgree}></Text>
       {agree&&<View style={styles.circle}><Text onPress={agree?disAgree:getAgree}></Text></View>}
       </View>
-      <Text style={{fontSize:12,marginLeft:"14%",marginTop:20}}>已阅读并同意《用户协议》＆《隐私政策》</Text>
+      <Text style={{fontSize:12,marginLeft:"18%",marginTop:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>已阅读并同意《用户协议》＆《隐私政策》</Text>
       </View>
-      <Link href={'/(tabs)/shouye'}>开发者入口</Link>
     </View>  
     </ImageBackground>
     
@@ -87,37 +100,40 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    width:"80%",
+    width:"84%",
     height:"60%",
     backgroundColor:'white',
-    borderRadius:10,
-    marginLeft:"10%",
-    marginTop:"45%",
+    borderRadius:15,
+    marginLeft:"8%",
+    marginTop:"40%",
+    elevation:8,
+    shadowColor: '#000',
   },login:{
     width:"80%",
-    height:30,
-    borderRadius:10,
+    height:40,
+    borderRadius:15,
     backgroundColor:'blue',
-    marginTop:"10%",
+    marginTop:"13%",
     marginLeft:"10%",
   },gray:{
     width:"90%",
-    height:30,
+    height:40,
     borderRadius:10,
     backgroundColor:'#E5E5E5',
-    position:'absolute',
+    borderRadius:15
   },box:{
     flexDirection:'row',
     justifyContent:'space-evenly',
     marginTop:'8%',
     width:"100%"
   },line:{
-    width:25,
-    height:2,
+    width:15,
+    height:3,
     backgroundColor:'#3083FE',
     position:'absolute',
     marginTop:"7%",
-    marginLeft:1
+    marginLeft:6,
+    borderRadius:10
   },agree:{
     width:8,
     height:8,
@@ -125,7 +141,7 @@ const styles = StyleSheet.create({
     borderColor:'#000000',
     borderWidth:1,
     position:'absolute',
-    marginLeft:"10%",
+    marginLeft:"13%",
     marginTop:26
   },circle:{
     width:5,

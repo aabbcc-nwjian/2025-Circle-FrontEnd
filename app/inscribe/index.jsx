@@ -10,16 +10,19 @@ export default function HomeScreen() {
       <Text onPress={()=>{navigation.goBack()}}><FontAwesome size={35} color={'white'} name='angle-left'/></Text>
       </View>
 
-      <View style={{width:'60%',height:'20%',marginLeft:'10%'}}>
+      <View style={{width:'60%',height:'20%',marginLeft:'10%',marginTop:40}}>
+      <Text style={{color:'white',fontSize:20,marginLeft:10,marginTop:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>选择一种</Text>
         <View style={{flexDirection:'row'}}>
-        <Text style={{color:'white',fontSize:15,marginLeft:10,marginTop:20}}>选择</Text>
-        <Text style={{color:'white',fontSize:15,marginLeft:30,marginTop:20}}>一种</Text>
-        <Text style={{color:'white',fontSize:30,marginLeft:0,marginTop:3}}>题型</Text>
+        <View>
+        <Text style={{color:'white',fontSize:48,marginLeft:6,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginTop:-10}}>题</Text>
+        <Text style={{color:'white',fontSize:48,marginLeft:6,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginTop:-15}}>型</Text>
         </View>
-        <View style={{flexDirection:'row'}}>
-        <Text style={{color:'white',fontSize:15,marginLeft:10,marginTop:20}}>开启你的</Text>
-        <Text style={{color:'white',fontSize:30,marginLeft:0,marginTop:3}}>编题</Text>
-        <Text style={{color:'white',fontSize:15,marginLeft:0,marginTop:20}}>之旅吧！</Text>
+        
+        <View>
+        <Text style={{color:'white',fontSize:24,marginLeft:0,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginTop:-2}}>开始你的</Text>
+        <Text style={{color:'white',fontSize:44,marginLeft:0,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginTop:-10}}>编题</Text>
+        <Text style={{color:'white',fontSize:24,marginLeft:6,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginTop:-10}}>之      旅</Text>
+        </View>
         </View>
       </View>
 
@@ -27,21 +30,21 @@ export default function HomeScreen() {
         style={styles.container} 
         onPress={() => navigation.navigate('one')}
       >
-        <Text style={{textAlign:'center',marginTop:13,fontSize:20}}>单选题</Text>
+        <Text style={{textAlign:'center',margin:'auto',fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>单选题</Text>
       </TouchableOpacity>
 
       <TouchableOpacity 
         style={styles.container}  
         onPress={() => navigation.navigate('more')}
       >
-        <Text style={{textAlign:'center',marginTop:13,fontSize:20}}>多选题</Text>
+        <Text style={{textAlign:'center',margin:'auto',fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>多选题</Text>
       </TouchableOpacity>
 
       <TouchableOpacity 
         style={styles.container}  
         onPress={() => navigation.navigate('choose')}
       >
-        <Text style={{textAlign:'center',marginTop:13,fontSize:20}}>判断题</Text>
+        <Text style={{textAlign:'center',margin:'auto',fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>判断题</Text>
       </TouchableOpacity>
       
     </View>
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
     borderRadius: 10,
     shadowColor: "#000",
-    marginTop:'15%',
+    marginTop:'8%',
     shadowOffset: {
       width: 4,
       height: 4,

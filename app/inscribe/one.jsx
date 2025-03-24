@@ -6,6 +6,7 @@ import { navigate } from 'expo-router/build/global-state/routing';
 import { useNavigation } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { Get, Post } from '../axios';
+import { LinearGradient } from 'expo-linear-gradient';
 export default function SendPage() {
   const navigation = useNavigation()
   const [tags,setTags]=useState()
@@ -24,13 +25,16 @@ export default function SendPage() {
       fetchUserData();
     }, []);
  
+  const [inputText, setInputText] = useState('');
+  const [analysisText, setAnalysisText] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
   const [option1,setOption1]=useState()
   const [option2,setOption2]=useState()
   const [option3,setOption3]=useState()
   const [option4,setOption4]=useState()
   const [practiceid,setPracticeid]=useState()
   const send = async()=>{
-    console.log(star,activetext,inputText,selectedOption,analysisText);
+    if(inputText&&selectedOption&&option1&&option2&&option3&&option4){
     const createpractice=await Post('/practice/createpractice',{
       "variety":"单选",
       "difficulty":String(star),
@@ -42,6 +46,10 @@ export default function SendPage() {
     })
     setPracticeid(createpractice.practiceid)
     console.log(createpractice);
+    }else{
+      alert('请完善题目信息')
+    }
+    
   }
   const clearInputs = () => {
     setInputText('');
@@ -108,9 +116,6 @@ export default function SendPage() {
         setCircle(false)
     }
 
-    const [inputText, setInputText] = useState('');
-    const [analysisText, setAnalysisText] = useState('');
-    const [selectedOption, setSelectedOption] = useState('');
     
     const [star ,setStar] = useState(1)
   if (should) {
@@ -118,8 +123,10 @@ export default function SendPage() {
     <>
     <View style={{height:75,backgroundColor:'white'}}>
      <View style={style.first}>
-        <Text onPress={()=>{navigation.goBack()}}><FontAwesome size={28} name='angle-left'/></Text>
-        <Text onPress={send} style={{width:50,height:22,backgroundColor:'#3D89FB',color:'white',borderRadius:7,textAlign:'center'}}>发布</Text>
+        <Text style={{height:40,marginTop:-10}} onPress={()=>{navigation.goBack()}}><FontAwesome size={40} name='angle-left'/></Text>
+        <View style={{width:60,height:32,backgroundColor:'#3D89FB',borderRadius:8}}>
+        <Text onPress={send} style={{margin:'auto',color:'white',textAlign:'center',fontSize:16,fontWeight:700,fontFamily:'Source Han Sans-Bold'}}>发布</Text>
+        </View>
     </View>   
     </View>
 
@@ -128,7 +135,7 @@ export default function SendPage() {
       <View style={style.inputContainer}>
         {!inputText && (
           <Text style={style.placeholder}>
-            题目内容（文字）
+            题目内容
           </Text>
         )}
         <TextInput 
@@ -142,15 +149,19 @@ export default function SendPage() {
       </View>   
     </View>
 
-    <View style={{height:30,marginTop:1}}> 
-        <Text style={{marginLeft:"90%",marginTop:5}}>答案</Text>
-    </View>
+    <LinearGradient
+    colors={['white','#A6CAFF','#5898F8']} 
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={{height:30,marginTop:1}}>
+      <Text style={{marginLeft:"85%",marginTop:5,fontSize:16,fontWeight:700,fontFamily:'Source Han Sans-Bold',color:'white'}}>答案</Text>
+    </LinearGradient>
     
       
     <View style={{width:'100%',backgroundColor:'white'}}>
     <View style={[style.choose, {marginTop:10}]}>
-      <Text style={{marginTop:10,marginLeft:10,fontSize:20}}>{'A'}:</Text>
-      <TextInput value={option1} onChangeText={setOption1} style={{marginLeft:10,}} maxLength={30} placeholder='请输入选项内容'/>
+      <Text style={{marginTop:10,marginLeft:10,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{'A'}:</Text>
+      <TextInput value={option1} onChangeText={setOption1} style={{marginLeft:10,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}} maxLength={30} placeholder='请输入选项内容'/>
       <TouchableOpacity 
         style={style.circle1} 
         onPress={() => setSelectedOption('A')}
@@ -159,8 +170,8 @@ export default function SendPage() {
       </TouchableOpacity>
     </View>
     <View style={[style.choose, {marginTop: 25}]}>
-      <Text style={{marginTop:10,marginLeft:10,fontSize:20}}>B:</Text>
-      <TextInput value={option2} onChangeText={setOption2} style={{marginLeft:10,}} maxLength={30} placeholder='请输入选项内容'/>
+      <Text style={{marginTop:10,marginLeft:10,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>B:</Text>
+      <TextInput value={option2} onChangeText={setOption2} style={{marginLeft:10,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}} maxLength={30} placeholder='请输入选项内容'/>
       <TouchableOpacity 
         style={style.circle1} 
         onPress={() => setSelectedOption('B')}
@@ -169,8 +180,8 @@ export default function SendPage() {
       </TouchableOpacity>
     </View>
     <View style={[style.choose, {marginTop:25}]}>
-      <Text style={{marginTop:10,marginLeft:10,fontSize:20}}>C:</Text>
-      <TextInput value={option3} onChangeText={setOption3} style={{marginLeft:10,}} maxLength={30} placeholder='请输入选项内容'/>
+      <Text style={{marginTop:10,marginLeft:10,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>C:</Text>
+      <TextInput value={option3} onChangeText={setOption3} style={{marginLeft:10,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}} maxLength={30} placeholder='请输入选项内容'/>
       <TouchableOpacity 
         style={style.circle1} 
         onPress={() => setSelectedOption('C')}
@@ -179,8 +190,8 @@ export default function SendPage() {
       </TouchableOpacity>
     </View>
     <View style={[style.choose, {marginTop:25},{marginBottom:15}]}>
-      <Text style={{marginTop:10,marginLeft:10,fontSize:20}}>D:</Text>
-      <TextInput value={option4} onChangeText={setOption4} style={{marginLeft:10,}} maxLength={30} placeholder='请输入选项内容'/>
+      <Text style={{marginTop:10,marginLeft:10,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>D:</Text>
+      <TextInput value={option4} onChangeText={setOption4} style={{marginLeft:10,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}} maxLength={30} placeholder='请输入选项内容'/>
       <TouchableOpacity 
         style={style.circle1} 
         onPress={() => setSelectedOption('D')}
@@ -192,8 +203,8 @@ export default function SendPage() {
 
 
     <View style={{height:50,backgroundColor:'white',marginTop:1}}>
-     <Text style={{marginTop:15,marginLeft:25,fontSize:16}}>选择圈子</Text>
-     <View style={{marginLeft:100,position:'absolute',marginTop:18,width:45,height:20,backgroundColor:'#3D89FB',borderRadius:8,}}>
+     <Text style={{marginTop:10,marginLeft:25,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>选择圈子</Text>
+     <View style={{marginLeft:120,position:'absolute',marginTop:18,width:45,height:20,backgroundColor:'#3D89FB',borderRadius:8,}}>
      <Text style={{marginLeft:8,fontSize:13,color:'white'}}>{activetext}</Text>
      </View>
      <FontAwesome onPress={circle?unCircle:getCircle} size={28} name={circle?'angle-up':'angle-down'} style={{top:15,right:15,position:'absolute'}} />
@@ -210,7 +221,7 @@ export default function SendPage() {
       </View>}
 
     <View style={{height:50,backgroundColor:'white',marginTop:1,flexDirection:'row'}}>
-    <Text style={{marginTop:15,marginLeft:25,fontSize:16}}>难度星数:</Text>
+    <Text style={{marginTop:10,marginLeft:25,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>难度星数:</Text>
       <TouchableOpacity onPress={()=>setStar(1)}>
       <Image 
       source={star>=1?require('../img/pic18.png'):require('../img/pic19.png')}
@@ -244,7 +255,7 @@ export default function SendPage() {
     </View>
 
     <View style={{backgroundColor:'white', marginTop:1, paddingVertical: 15}}>
-  <Text style={{marginLeft:25, fontSize:16}}>答案解析:</Text>
+  <Text style={{marginLeft:25,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginTop:-5}}>答案解析:</Text>
   <View style={{position: 'relative',marginLeft: 20,marginRight: 20,}}>
     {!analysisText && (
       <View style={style.analysisPlaceholder}>
@@ -275,7 +286,7 @@ const style = StyleSheet.create({
         flex:1,
         flexDirection:'row',
         justifyContent:'space-between',
-        padding:25
+        padding:25,
     },third:{
         flex:1,
         flexDirection:'column',
@@ -328,19 +339,23 @@ const style = StyleSheet.create({
         height: 130,
         backgroundColor: '#3D89FB',
         position: 'relative',
+        elevation:10
       },
       input: {
         fontSize: 20,
         color: 'white',
         padding: 10,
         height:130,
+        fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700
       },
       placeholder: {
         position: 'absolute',
-        left: 100,
+        left: '50%',
+        marginLeft:-40,
         top: 50, 
         fontSize: 20,
-        color: 'rgba(255,255,255,0.7)',
+        color: '#FFFFFF',
+        fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700
       },choose:{
         flexDirection:'row',
         marginLeft:'5%',
@@ -363,15 +378,15 @@ const style = StyleSheet.create({
       },analysisPlaceholder: {
         position: 'absolute',
         left: '45%',
-        top: 25, 
+        top: 20, 
         fontSize: 20,
         color: 'rgba(255,255,255,0.7)',
       },circle1:{
         width:30,
         height:30,
-        borderWidth:1,
+        borderWidth:2,
         borderRadius:15,
-        borderColor:'#3D89FB',
+        borderColor:'#3D3D3D',
         marginLeft:'110%',
         marginTop:10,
         justifyContent: 'center',
@@ -379,8 +394,8 @@ const style = StyleSheet.create({
         position:'absolute'
       },
       circle2:{
-        width:24,
-        height:24,
+        width:23,
+        height:23,
         borderRadius:12,
         backgroundColor:'#3D89FB',
       },

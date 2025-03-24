@@ -51,33 +51,33 @@ export default function AddQuestion() {
     <View style={{backgroundColor:'white',height:'100%',width:'100%'}}>
       <View style={{margin:10,flexDirection:'row'}}>
       <Text onPress={()=>{navigation.goBack()}}><FontAwesome size={35} name='angle-left'/></Text>
-      <Text style={{textAlign:'center',fontSize:14,left:'50%',marginLeft:-45}}>+ 添加题目</Text>
-    </View>
+      <Text style={{textAlign:'center',left:'50%',marginLeft:-45,fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:24}}>添加题目</Text>
+      </View>
 
       <View style={{flexDirection:'row',justifyContent:'space-around'}}>
-        <Text>题型</Text>
-        <Text onPress={() => navigation.navigate('stash')}>题库</Text>
+        <Text style={{fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:20}}>题型</Text>
+        <Text style={{fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:20,color:'#9A9898'}} onPress={() => navigation.navigate('stash')}>题库</Text>
       </View>
-      <View style={{left:'25%',width:25,height:2,backgroundColor:"#3D89FB",marginLeft:-13}}></View>
+      <View style={{left:'25%',width:22,height:3,backgroundColor:"#3083FE",marginLeft:-11,borderRadius:5}}></View>
       <TouchableOpacity 
-        style={[styles.container,{marginTop:"30%"}]} 
+        style={[styles.container,{marginTop:"35%"}]} 
         onPress={addone}
       >
-        <Text style={{textAlign:'center',marginTop:13,fontSize:20}}>单选题</Text>
+        <Text style={{textAlign:'center',marginTop:13,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700,color:'white'}}>单选题</Text>
       </TouchableOpacity>
 
       <TouchableOpacity 
         style={[styles.container,{marginTop:60}]} 
         onPress={addmore}
       >
-        <Text style={{textAlign:'center',marginTop:13,fontSize:20}}>多选题</Text>
+        <Text style={{textAlign:'center',marginTop:13,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700,color:'white'}}>多选题</Text>
       </TouchableOpacity>
 
       <TouchableOpacity 
         style={[styles.container,{marginTop:60}]} 
         onPress={addchoose}
       >
-        <Text style={{textAlign:'center',marginTop:13,fontSize:20}}>判断题</Text>
+        <Text style={{textAlign:'center',marginTop:13,fontSize:20,fontFamily:'Source Han Sans-Bold',fontWeight:700,color:'white'}}>判断题</Text>
       </TouchableOpacity>
       
     </View>

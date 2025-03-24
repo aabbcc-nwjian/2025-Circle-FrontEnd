@@ -67,47 +67,52 @@ export default function ForgetScreen() {
     }
   }
   return (
-    <ImageBackground style={{width:'100%',height:'100%',backgroundColor:'#3083FE'}}>
+    <ImageBackground source={require('../img/bac.png')} style={{width:'100%',height:'100%'}}>
 
     <View style={styles.container}>
 
-     <View style={styles.line}></View>
      <View>
-      <Text style={{marginTop:'8%',left:'50%',marginLeft:-30}}>修改密码</Text>
+      <Text style={{marginTop:'8%',left:'50%',marginLeft:-30,fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>修改密码</Text>
      </View>
  
 
     <View style={{marginTop:'10%',marginLeft:'10%'}}>
-    <View style={[styles.gray,{marginTop:'2%'}]}></View> 
-    <TextInput value={email} onChangeText={setEmail} placeholder='请输入邮箱'></TextInput>
+    <View style={[styles.gray,{marginTop:'2%'}]}>
+    <TextInput value={email} onChangeText={setEmail} style={{fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginLeft:10,margin:'auto'}} placeholderTextColor={'#9A9898'} placeholder='请输入邮箱'></TextInput>  
+    </View> 
     </View>
-    <View style={{marginTop:'10%',marginLeft:'10%'}}>
-    <View style={[styles.gray,{marginTop:'2%'}]}></View> 
-    <TextInput value={code} onChangeText={setCode} placeholder='请输入验证码'></TextInput>
+
+    <View style={{marginTop:'4%',marginLeft:'10%'}}>
+    <View style={[styles.gray,{marginTop:'2%',flexDirection:'row'}]}>
+     <TextInput value={code} onChangeText={setCode} style={{fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginLeft:10,margin:'auto'}} placeholderTextColor={'#9A9898'} placeholder='请输入验证码'></TextInput>
     <TouchableOpacity 
         onPress={handleGetVerificationCode}
         disabled={countdown > 0}
-        style={{position:'absolute', marginTop:"3%", marginLeft:'60%'}}
+        style={{marginLeft:'25%',margin:'auto'}}
       >
-        <Text style={{color: countdown > 0 ? 'gray' : 'blue'}}>
+        <Text style={{color: countdown > 0 ? 'gray' : '#3083FE',fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>
           {countdown > 0 ? `${countdown}s后重试` : '获取验证码'}
         </Text>
-    </TouchableOpacity>
+    </TouchableOpacity>  
+    </View> 
     </View>
-    <View style={{marginTop:'10%',marginLeft:'10%'}}>
-    <View style={[styles.gray,{marginTop:'2%'}]}></View>
-    <TextInput value={password1} onChangeText={setPassword1}  placeholder='请输入新密码'></TextInput>
+
+    <View style={{marginTop:'4%',marginLeft:'10%'}}>
+    <View style={[styles.gray,{marginTop:'2%'}]}>
+    <TextInput value={password1} onChangeText={setPassword1} style={{fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginLeft:10,margin:'auto'}} placeholderTextColor={'#9A9898'} placeholder='请输入新密码'></TextInput>  
     </View>
-    <View style={{marginTop:'10%',marginLeft:'10%'}}>
-    <View style={[styles.gray,{marginTop:'2%'}]}></View>
-    <TextInput value={password2} onChangeText={setPassword2}  placeholder='再次输入新密码'></TextInput>
+    </View>
+    <View style={{marginTop:'4%',marginLeft:'10%'}}>
+    <View style={[styles.gray,{marginTop:'2%'}]}>
+    <TextInput value={password2} onChangeText={setPassword2} style={{fontSize:12,fontFamily:'Source Han Sans-Bold',fontWeight:700,marginLeft:10,margin:'auto'}} placeholderTextColor={'#9A9898'} placeholder='再次输入新密码'></TextInput>  
+    </View>
     </View>
 
     <View>
     
-    <View style={styles.login}><Text onPress={() => navigation.navigate('index')} style={{color:'white',textAlign:'center',marginTop:4}}>返回</Text></View>
+    <View style={styles.login}><Text onPress={() => navigation.navigate('index')} style={{color:'white',textAlign:'center',margin:'auto',fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>返回</Text></View>
     <TouchableOpacity onPress={changePassword}>
-    <View style={styles.sure}><Text style={{color:'white',textAlign:'center',marginTop:4}}>确认</Text></View>
+    <View style={styles.sure}><Text style={{color:'white',textAlign:'center',margin:'auto',fontSize:16,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>确认</Text></View>
     </TouchableOpacity>
     </View>   
     </View>  
@@ -119,41 +124,35 @@ export default function ForgetScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    width:"80%",
+    width:"84%",
     height:"60%",
     backgroundColor:'white',
-    borderRadius:10,
-    marginLeft:"10%",
-    marginTop:"45%",
+    borderRadius:15,
+    marginLeft:"8%",
+    marginTop:"40%",
+    elevation:8,
+    shadowColor: '#000',
   },gray:{
-    width:'90%',
-    height:30,
+    width:"90%",
+    height:40,
     borderRadius:10,
     backgroundColor:'#E5E5E5',
-    position:'absolute',
-  },line:{
-    width:25,
-    height:2,
+    borderRadius:15
+  },login:{
+    width:'35%',
+    height:40,
+    borderRadius:15,
     backgroundColor:'#3083FE',
     position:'absolute',
-    marginTop:'16%',
-    left:'50%',
-    marginLeft:-12.5,
-  },login:{
-    width:'30%',
-    height:30,
-    borderRadius:10,
-    backgroundColor:'blue',
-    position:'absolute',
-    marginTop:'18%',
+    marginTop:'13%',
     marginLeft:'10%'
   },sure:{
-    width:'30%',
-    height:30,
-    borderRadius:10,
-    backgroundColor:'blue',
+    width:'35%',
+    height:40,
+    borderRadius:15,
+    backgroundColor:'#3083FE',
     position:'absolute',
-    marginTop:'18%',
-    marginLeft:'60%'
+    marginTop:'13%',
+    marginLeft:'55%'
   }
 });

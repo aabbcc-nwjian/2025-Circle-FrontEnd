@@ -16,7 +16,7 @@ export default function Layout() {
       <Stack.Screen name="paper" options={{ headerShown: false }} />
       <Stack.Screen name="sheet" options={{ headerShown: false }} />
       <Stack.Screen name="search" options={{ headerShown: false }} />
-      <Stack.Screen name="circle" options={{ headerShown: false }} />
+      <Stack.Screen name="Circle" options={{ headerShown: false }} />
       <Stack.Screen name="createcircle" options={{ headerShown: false }} />
       <Stack.Screen name="login" options={{ headerShown: false }} />
     </Stack>

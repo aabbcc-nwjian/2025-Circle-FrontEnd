@@ -1,20 +1,19 @@
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity ,Image} from 'react-native';
 import { useEffect , useState } from 'react';
-import { Get , Post} from '../axios';
+import { Get,Post } from '../../axios';
 import { useRoute } from '@react-navigation/native';
 import { ScrollView } from 'react-native';
+import myStory from '../../datas';
 export default function HomeScreen() {
   const navigation = useNavigation()
   const route = useRoute()
   const [follow,setFollow]=useState([])
   const [circles,setCircles]=useState()
-  const searchsheet = async(history)=>{
-    const response = await Post('/search/searchcircle',{
-      "circlekey":history,
-    })
+  const searchsheet = async()=>{
+    const response = await Get('/circle/selectcircle')
     const followPromises = response.circle.map((circle)=>{
       return getFollow(circle.Id)
     })
@@ -27,10 +26,9 @@ export default function HomeScreen() {
     const data = await Post('/circle/showfollowcircle',{"circleid":id})
     return data.message
   }
-  const search = route.params.search
   useEffect(() => {
-    searchsheet(search)
-  },[search])
+    searchsheet()
+  },[])
   const handleFollow = async(id, index) => {
   try {
     const data = await Post('/circle/followcircle', {"circleid": id})
@@ -67,33 +65,27 @@ const unFollow = async(id, index) => {
   useEffect(() => {
     console.log(follow); 
   },[])
+
+  const handleCirclePress = (circleId,discription,follow) => {
+    myStory.data['circleId'] = circleId
+    myStory.data['discription'] = discription
+    myStory.data['follow'] = follow
+    console.log(myStory.data['circleId']);
+    navigation.navigate('Circle') 
+  }
   if (circles) {
   return (
     <View style={{backgroundColor:'white',height:'100%',width:'100%'}}>
-        <View style={{flexDirection:'row'}}>
-            <View style={styles.container}>
-                <FontAwesome onPress={()=>{navigation.navigate('index')}} style={{marginTop:8,marginLeft:30,color:'#3D89FB'}} size={20} name="search" />
-                <TextInput
-                style={styles.input}
-                placeholderTextColor={'#3D89FB'}
-                placeholder={search}
-                ></TextInput>
-            </View>
-            <Text style={{marginTop:30,marginLeft:"5%"}} onPress={()=>{navigation.navigate('index')}}>取消</Text>
-        </View>
-
-        <View style={{flexDirection:'row',marginTop:'5%',elevation:2,backgroundColor:'white'}}>
-        <View style={[styles.head]}><Text onPress={()=>navigation.navigate('sheet',{'search':search})} style={styles.tabText}>卷子</Text></View>
-        <View style={[styles.head,{borderTopLeftRadius:15,backgroundColor:"#3D89FB"}]}><Text style={styles.activeTabText}>圈子</Text></View>
-        </View>
       <ScrollView style={styles.listContainer}>
         <View>
         {circles.map((circle,index) => (
           <View key={circle.Id} style={styles.circleItem}>
+            <TouchableOpacity onPress={()=>handleCirclePress(circle.Name,circle.Discription,follow[index])} style={{flexDirection: 'row'}}>
             <View style={styles.avatar}>
-              
+             <Image source={{ uri: circle.Imageurl }} style={{ width: '100%', height: '100%' }} />
             </View>
-            <Text style={styles.circleName}>{circle.Name}</Text>
+            <Text style={styles.circleName}>{circle.Name}</Text>  
+            </TouchableOpacity>
             {follow[index] == "未关注"?
             <TouchableOpacity 
               style={styles.followButton} 
@@ -109,6 +101,7 @@ const unFollow = async(id, index) => {
               <Text style={styles.followButtonText}>取消关注</Text>
             </TouchableOpacity>
             }
+            
           </View>
         ))}</View>
       </ScrollView>
@@ -171,6 +164,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontFamily:'Source Han Sans-Bold',
       fontWeight:700,
+      margin:'auto'
     },
     followButton: {
       paddingHorizontal: 15,
@@ -178,6 +172,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#3D89FB',
       borderRadius: 10,
       elevation: 3,
+      left:'-20%',
+      marginLeft:-5
     },
     followButtonText: {
       color: 'white',
@@ -201,7 +197,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#FB5D5D',
       borderRadius: 10,
       elevation: 3,
+      left:'-20%',
+      marginLeft:-18
     }
 });
-
-

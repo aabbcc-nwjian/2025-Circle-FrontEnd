@@ -9,23 +9,30 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: '练习',headerShown:false,tabBarLabelStyle:{fontSize:19, fontFamily:'Source Han Sans-Bold',position:'absolute',marginTop:5,right:'20%'},
+          title: '练习',headerShown:false,tabBarLabelStyle:{fontSize:19, fontFamily:'Source Han Sans-Bold',fontWeight:700,marginTop:-25,marginLeft:'50%'},
           tabBarIcon: ({ color }) => <FontAwesome size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="circle"
+        options={{
+          title: '圈子',headerShown:false,tabBarLabelStyle:{fontSize:19, fontFamily:'Source Han Sans-Bold',fontWeight:700,marginTop:-25},
+          tabBarIcon: ({ color }) => <FontAwesome size={28}  color={color} />,
         }}
       />
       <Tabs.Screen
         name="answer"
         options={{
-          title: '答卷',headerShown:false,tabBarLabelStyle:{fontSize:19, fontFamily:'Source Han Sans-Bold',position:'absolute',marginTop:5,left:'20%'},
+          title: '答卷',headerShown:false,tabBarLabelStyle:{fontSize:19, fontFamily:'Source Han Sans-Bold',fontWeight:700,marginTop:-25,marginRight:'50%'},
           tabBarIcon: ({ color }) => <FontAwesome size={28}  color={color} />,
         }}
       />
     </Tabs>
-{/*     <View style={{position:'absolute',width:'20%',height:48,backgroundColor:'white'}}><Link style={{marginTop:10,marginLeft:'40%',}} href={'/setting'}><FontAwesome size={25} name="bars" /></Link></View>
- */}    <View style={{position:'absolute',width:'20%',height:48,backgroundColor:'white',right:0}}><Link style={{marginTop:10,marginLeft:'20%',}} href={'/search'}>
+    <View style={{position:'absolute',width:'18%',height:48,backgroundColor:'white'}}>{/* <Link style={{marginTop:10,marginLeft:'40%',}} href={'/setting'}><FontAwesome size={25} name="bars" /></Link> */}</View>
+    <View style={{position:'absolute',width:'18%',height:48,backgroundColor:'white',right:0}}><Link style={{marginTop:12,marginLeft:'20%',}} href={'/search'}>
       <Image 
           source={require('../../img/pic1.png')} 
-          style={{width: '80%', height: '80%', resizeMode: 'contain',marginRight:200}}
+          style={{width: '70%', height: '75%', resizeMode: 'contain',marginRight:200}}
         /></Link>
     </View>
     </>

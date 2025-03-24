@@ -43,7 +43,8 @@ export default function Practice() {
     }
   }
   const sendanswer=async()=>{
-    setTimeing(false)
+    if (selectedOption) {
+      setTimeing(false)
     const data=await Post('/practice/checkanswer',{
       "practiceid":practiceid,
       "circle":circle,
@@ -52,6 +53,9 @@ export default function Practice() {
     })
     console.log(circle)
     handleOptionPress()
+    }else{
+      alert('请选择答案')
+    }
   }
   const handleOptionPress = () => {
     const answers = answer.split('');
@@ -171,8 +175,8 @@ export default function Practice() {
           onPress={() => setSelectedOption(option.Option)}
         >
           <View style={styles.optionContent}>
-            <Text>{option.Option}.</Text>
-            <Text>{option.Content}</Text>
+            <Text style={{fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{option.Option}.</Text>
+            <Text style={{fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{option.Content}</Text>
           </View>                
         </TouchableOpacity>
       </View>
@@ -201,8 +205,8 @@ export default function Practice() {
           onPress={() => toggleOption(option.Option)}
         >
           <View style={styles.optionContent}>
-            <Text>{option.Option}.</Text>
-            <Text>{option.Content}</Text>
+            <Text style={{fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{option.Option}.</Text>
+            <Text style={{fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{option.Content}</Text>
           </View>                
         </TouchableOpacity>
       </View>
@@ -217,7 +221,7 @@ export default function Practice() {
           onPress={() => setSelectedOption(option.Option)}
         >
           <View style={styles.optionContent}>
-            <Text>{option.Content}</Text>
+            <Text style={{fontSize:18,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>{option.Content}</Text>
           </View>                
         </TouchableOpacity>
       </View>
@@ -228,10 +232,10 @@ export default function Practice() {
   }else{
     return (
     <View style={{backgroundColor:'white',height:'100%',width:'100%'}}>
-    <View style={{flexDirection:'row'}}>
-      <Text style={{marginLeft:'5%',marginTop:'4%',position:'absolute'}} onPress={()=>{navigation.goBack()}}><FontAwesome size={35} name='angle-left'/></Text>
-      <Text style={{fontSize:18,textAlign:'center',width:"40%",marginLeft:'30%',marginTop:'5%'}}>练习场</Text>
-      <View style={{marginTop:'5%',marginLeft:'5%',flexDirection:'row'}}>
+    <View style={{flexDirection:'row',marginTop:'5%'}}>
+      <Text style={{marginLeft:'5%',margin:'auto',position:'absolute'}} onPress={()=>{navigation.goBack()}}><FontAwesome size={35} name='angle-left'/></Text>
+      <Text style={{fontSize:24,textAlign:'center',width:"40%",margin:'auto',fontFamily:'Source Han Sans-Bold',fontWeight:700}}>练习场</Text>
+      <View style={{margin:'auto',marginLeft:'5%',flexDirection:'row'}}>
         <TouchableOpacity onPress={clickLove}>
         <Image 
         source={love?require('../img/pic9.png'):require('../img/pic10.png')}
@@ -247,10 +251,10 @@ export default function Practice() {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={styles.questions}>
-            <Text style={{marginTop:10,marginLeft:'5%',marginRight:'5%'}}>{content}</Text>
+            <Text style={{marginTop:10,marginLeft:'5%',marginRight:'5%',fontFamily:'Source Han Sans-Bold',fontWeight:700,color:'white',fontSize:16}}>{content}</Text>
         </LinearGradient>
         <View style={styles.hard}>
-          <Text>难度星数</Text>
+          <Text style={{fontSize:14,fontFamily:'Source Han Sans-Bold',fontWeight:700}}>难度星数</Text>
           <Image 
           source={star>=1?require('../img/pic18.png'):require('../img/pic19.png')}
           style={{width:15,height:15,marginTop:3,marginLeft:10}}
@@ -275,7 +279,7 @@ export default function Practice() {
         {questionstyle=="单选" && option.map(renderOption)}
         {questionstyle=="多选" && option.map(renderOption1)}
         {questionstyle=="判断题" && option.map(renderOption2)}
-        <View style={styles.sure}><Text onPress={sendanswer} style={{textAlign:'center',marginTop:10,color:'white'}}>确定</Text></View>
+        <View style={styles.sure}><Text onPress={sendanswer} style={{textAlign:'center',marginTop:8,fontFamily:'Source Han Sans-Bold',fontWeight:700,color:'white',fontSize:16}}>确定</Text></View>
     </View>
     </View>
   );

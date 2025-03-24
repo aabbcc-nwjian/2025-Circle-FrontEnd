@@ -2,7 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { useState } from 'react';
-
+import { Shadow } from 'react-native-shadow-2';
 const { width, height } = Dimensions.get('window');
 const BOTTOM_BAR_HEIGHT = height * 0.07;
 
@@ -40,7 +40,7 @@ export default function TabLayout() {
         options={{
           title: '我的',
           headerShown:false,
-          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarLabelStyle: styles.tabBarLabel,          
           tabBarIcon: ({ color }) => <FontAwesome size={28} color={color} />,
         }}
       />
@@ -55,7 +55,7 @@ export default function TabLayout() {
     <View style={styles.addMenuContainer}>
       <View style={[styles.addMenuItem,{borderBottomWidth: 0.5}]}><Link style={styles.addMenuLink} href={'/createcircle'}>创圈</Link></View>
       <View style={[styles.addMenuItem,{borderBottomWidth: 0.5}]}><Link style={styles.addMenuLink} href={'/inscribe'}>编题</Link></View>
-      <View style={styles.addMenuItem}><Link style={styles.addMenuLink} href={'/paper'}>组卷</Link></View>
+      <View style={styles.addMenuItem}><Link style={styles.addMenuLink} href={'/paper'}>组卷</Link></View>        
     </View>
     }
     </>
@@ -64,8 +64,9 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBarLabel: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: 'Source Han Sans-Bold',
+    fontWeight:700,
     position: 'absolute',
     top: '50%',
     marginTop: -8,
@@ -74,13 +75,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: '50%',
-    marginLeft: '-10%',
-    width: '20%',
-    height: BOTTOM_BAR_HEIGHT,
+    marginLeft: '-12%',
+    width: '24%',
     backgroundColor: 'white',
+    height: BOTTOM_BAR_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1,
+    zIndex:1
   },
   addButtonWrapper: {
     alignItems: 'center',
@@ -88,15 +89,14 @@ const styles = StyleSheet.create({
   addMenuContainer: {
     position: 'absolute',
     bottom: BOTTOM_BAR_HEIGHT,
+    marginBottom:1,
     left: '40%',
     width: '20%',
     backgroundColor: 'white',
     borderColor: 'white',
-    borderTopLeftRadius:5,
-    borderTopRightRadius:5,
-    borderBottomWidth:0,
-    shadowColor: "#000000",
-    elevation: 1,
+    borderTopLeftRadius:10,
+    borderTopRightRadius:10,
+    elevation: 5,
   },
   addMenuItem: {
     borderColor: 'gray',
@@ -104,5 +104,9 @@ const styles = StyleSheet.create({
   },
   addMenuLink: {
     textAlign: 'center',
+    fontSize:14,
+    fontWeight:700,
+    fontFamily:'Source Han Sans-Bold',
+    color:'#3D3D3D'
   }
 });

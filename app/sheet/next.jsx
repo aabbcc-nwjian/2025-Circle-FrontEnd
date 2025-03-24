@@ -16,6 +16,7 @@ export default function Practice() {
   const navigation = useNavigation()
   const route = useRoute();
   const toNext=()=>{
+    if (selectedOption) {
     record()
     checkanswer()
     dotext()
@@ -27,6 +28,9 @@ export default function Practice() {
       setSelectedOption(null)
     }
     myStory.data['sheet']=testid
+    }else{
+      alert('请选择答案')
+    }
   }
   const testid = route.params.testid;
   const a="单选"
@@ -112,8 +116,8 @@ export default function Practice() {
             onPress={() => setSelectedOption(option.Option)}
           >
             <View style={styles.optionContent}>
-              <Text>{option.Option}.</Text>
-              <Text>{option.Content}</Text>
+              <Text style={[styles.text,selectedOption === option.Option && styles.activetext]}>{option.Option}.</Text>
+              <Text style={[styles.text,selectedOption === option.Option && styles.activetext]}>{option.Content}</Text>
             </View>                
           </TouchableOpacity>
         </View>
@@ -141,8 +145,8 @@ export default function Practice() {
             onPress={() => toggleOption(option.Option)}
           >
             <View style={styles.optionContent}>
-              <Text>{option.Option}.</Text>
-              <Text>{option.Content}</Text>
+              <Text style={[styles.text,selectedOptions.includes(option.Option) && styles.activetext]}>{option.Option}.</Text>
+              <Text style={[styles.text,selectedOptions.includes(option.Option) && styles.activetext]}>{option.Content}</Text>
             </View>                
           </TouchableOpacity>
         </View>
@@ -157,7 +161,7 @@ export default function Practice() {
             onPress={() => setSelectedOption(option.Option)}
           >
             <View style={styles.optionContent}>
-              <Text>{option.Content}</Text>
+              <Text style={[styles.text,selectedOption === option.Option && styles.activetext]}>{option.Content}</Text>
             </View>                
           </TouchableOpacity>
         </View>
@@ -185,18 +189,19 @@ export default function Practice() {
         <Text onPress={back}>
           <FontAwesome size={35} name='angle-left'/>
         </Text>
-        <Text style={{textAlign:'center',fontSize:18,marginLeft:'40%'}}>{testname}</Text>
+        <Text style={{marginLeft:'38%',fontSize:24,fontWeight: '700', fontFamily: 'Source Han Sans-Bold'}}>{testname}</Text>
+        <Text style={{marginLeft:'20%',margin:'auto',fontSize:18,fontWeight: '700', fontFamily: 'Source Han Sans-Bold',color:'#737576'}}>{count+1}/{tests.length}</Text>
       </View>
 
       <View>
         <View style={styles.questions}>
-          <Text style={{marginTop:10,color:'white',marginLeft:10}}>{tests[count].Content}</Text>
+          <Text style={{marginTop:10,marginLeft:10,fontWeight: '700', fontFamily: 'Source Han Sans-Bold',fontSize:18}}>{tests[count].Content}</Text>
         </View>
-        <View style={styles.hard}><Text>{questionstyle}</Text></View>
+        <View style={styles.hard}><Text style={{fontWeight: '700', fontFamily: 'Source Han Sans-Bold',fontSize:14}}>{questionstyle}</Text></View>
         {questionstyle=="单选" && option.map(renderOption)}
         {questionstyle=="多选" && option.map(renderOption1)}
         {questionstyle=="判断题" && option.map(renderOption2)}
-        <View style={styles.sure}><Text onPress={toNext} style={{textAlign:'center',marginTop:10,color:'white'}}>{count==tests.length-1 ? '提交' : '下一题'}</Text></View>
+        <View style={styles.sure}><Text onPress={toNext} style={{textAlign:'center',marginTop:8,color:'white',fontWeight: '700', fontFamily: 'Source Han Sans-Bold',fontSize:16}}>{count==tests.length-1 ? '提交' : '下一题'}</Text></View>
       </View>
     </View>
   );
@@ -208,18 +213,19 @@ const styles = StyleSheet.create({
   questions:{
     width:'80%',
     height:100,
-    backgroundColor:'#3083FE',
-    top:50,
+    backgroundColor:'white',
+    top:30,
     left:'10%',
-    borderRadius:15
+    borderRadius:15,
+    elevation:5
   },
   hard:{
-    marginTop:50,
-    marginLeft:'75%'
+    marginTop:40,
+    marginLeft:'78%'
   },sure:{
     marginTop:50,
-    marginLeft:'35%',
-    width:'30%',
+    marginLeft:'37%',
+    width:'26%',
     height:40,
     elevation:5,
     borderRadius:10,
@@ -240,5 +246,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 20,
     flexDirection: 'row',
-  },
+  },text:{
+    fontSize:18,
+    fontWeight: '700', fontFamily: 'Source Han Sans-Bold',
+  },activetext:{
+    color:'white'
+  }
 });

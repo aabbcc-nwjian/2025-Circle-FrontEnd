@@ -4,6 +4,7 @@ import { useState , useEffect} from 'react';
 import { Post } from '../axios';
 import myStory from '../datas';
 import React from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 export default function ChooseTf({start=false,optionid = null,onUpdate}) {
 
     const [inputText, setInputText] = useState('');
@@ -83,11 +84,8 @@ export default function ChooseTf({start=false,optionid = null,onUpdate}) {
   }
 if (should&&shouldRender1) {
   return (
-    <View style={{marginTop:15}}>
-      <View style={{height:15, backgroundColor:'white',width:'100%'}}>
-        <Text onPress={hide} style={{marginLeft:'90%'}}>delete</Text>
-      </View>
-    <View style={{height:180, backgroundColor:'white'}}>
+    <View>
+    <View style={{height:170, backgroundColor:'white'}}>
       <View style={style.inputContainer}>
         {!inputText && (
           <Text style={style.placeholder}>
@@ -104,16 +102,28 @@ if (should&&shouldRender1) {
         />
       </View>   
     </View>
-
-    <View style={{height:30,marginTop:1}}> 
-        <Text style={{marginLeft:"90%",marginTop:5}}>答案</Text>
+    <View style={{height:30, backgroundColor:'white',width:'100%'}}>
+      <TouchableOpacity onPress={hide} style={{marginLeft:'88%',width:30,height:100}}>
+        <Image
+        source={require('../img/pic23.png')}
+        style={{width:'60%',height:"20%",marginTop:5}}
+        />
+      </TouchableOpacity>
     </View>
+
+    <LinearGradient
+    colors={['white','#A6CAFF','#5898F8']} 
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={{height:30,marginTop:1}}>
+      <Text style={{marginLeft:"85%",marginTop:5,fontSize:16,fontWeight:700,fontFamily:'Source Han Sans-Bold',color:'white'}}>答案</Text>
+    </LinearGradient>
     
       
   <View style={{width:'100%',backgroundColor:'white'}}>
   {['正确', '错误'].map((option) => (
     <View key={option} style={[style.choose, {marginTop:10,marginBottom:25}]}>
-      <Text style={{marginTop:10,marginLeft:10,fontSize:20}}>{option}</Text>
+      <Text style={{marginTop:10,marginLeft:10,fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:20}}>{option}</Text>
       <TouchableOpacity 
         style={style.circle1} 
         onPress={() => setSelectedOption(option)}
@@ -125,7 +135,7 @@ if (should&&shouldRender1) {
 </View>
 
   <View style={{height:50,backgroundColor:'white',marginTop:1,flexDirection:'row'}}>
-      <Text style={{marginTop:15,marginLeft:'6%',fontSize:16}}>难度星数:</Text>
+      <Text style={{marginTop:10,marginLeft:'6%',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:20}}>难度星数:</Text>
       <TouchableOpacity onPress={()=>setStar(1)}>
         <Image 
         source={star>=1?require('../img/pic18.png'):require('../img/pic19.png')}
@@ -158,18 +168,18 @@ if (should&&shouldRender1) {
         </TouchableOpacity>
     </View>
   <View style={{height:50,backgroundColor:'white',marginTop:1,flexDirection:'row'}}>
-    <Text style={{marginTop:15,marginLeft:'6%',fontSize:16}}>分值</Text>
+    <Text style={{marginTop:10,marginLeft:'6%',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:20}}>分值</Text>
     <View style={{marginTop:10,marginLeft:'55%',width:50,height:30,backgroundColor:'gray',borderRadius:5,}}></View>
     <TextInput maxLength={3} style={{position:'absolute',marginTop:6,marginLeft:265,color:'white'}}></TextInput>
-    <Text style={{marginTop:15,marginLeft:10,fontSize:16,}}>分</Text>
+    <Text style={{marginTop:10,marginLeft:10,fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:20}}>分</Text>
   </View>
 
   <View style={{backgroundColor:'white', marginTop:1, paddingVertical: 15}}>
-  <Text style={{marginLeft:'6%', fontSize:16}}>答案解析:</Text>
+  <Text style={{marginLeft:'6%',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:20}}>答案解析:</Text>
   <View style={{position: 'relative',marginLeft: 20,marginRight: 20,}}>
     {!analysisText && (
       <View style={style.analysisPlaceholder}>
-        <Text style={{color: 'gray'}}>请输入...</Text>
+        <Text style={{color: 'gray',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:14}}>请输入...</Text>
       </View>
     )}
     <TextInput 
@@ -201,13 +211,15 @@ const style = StyleSheet.create({
         color: 'white',
         padding: 10,
         height:130,
+        fontFamily:'Source Han Sans-Bold',fontWeight:700
       },
       placeholder: {
         position: 'absolute',
         left: 100,
         top: 50, 
         fontSize: 20,
-        color: 'rgba(255,255,255,0.7)',
+        color: 'white',
+        fontFamily:'Source Han Sans-Bold',fontWeight:700
       },choose:{
         flexDirection:'row',
         marginLeft:'5%',
@@ -230,24 +242,24 @@ const style = StyleSheet.create({
       },analysisPlaceholder: {
         position: 'absolute',
         left: '40%',
-        top: 25, 
+        top: 20, 
         fontSize: 20,
         color: 'rgba(255,255,255,0.7)',
       },circle1:{
         width:30,
         height:30,
-        borderWidth:1,
+        borderWidth:2,
         borderRadius:15,
-        borderColor:'#3D89FB',
+        borderColor:'#3D3D3D',
         marginLeft:'110%',
-        position:'absolute',
         marginTop:10,
         justifyContent: 'center',
         alignItems: 'center',
+        position:'absolute'
       },
       circle2:{
-        width:24,
-        height:24,
+        width:23,
+        height:23,
         borderRadius:12,
         backgroundColor:'#3D89FB',
       },

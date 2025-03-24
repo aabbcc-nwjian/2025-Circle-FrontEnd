@@ -19,6 +19,7 @@ export default function SendPage() {
   const testname = myStory.add['testname']
   const discirption = myStory.add['discirption']
   const circle = myStory.add['circle']
+  const imageUrl = myStory.add['image']
 
   const createcontent = myStory.add['content']
   const createdifficulty = myStory.add['difficulty']
@@ -57,7 +58,8 @@ export default function SendPage() {
     const data = await Post('/test/createtest',{
       "testname":testname,
       "discription":discirption,
-      "circle":circle})
+      "circle":circle,
+      "imageurl":imageUrl})
     console.log(data); 
     myStory.add['testid']=data.id
     setTestid(data.id)
@@ -79,15 +81,21 @@ export default function SendPage() {
   }else{
    return (
     <>
-    <View style={{height:75,backgroundColor:'white'}}>
+    <View style={{height:80,backgroundColor:'white'}}>
      <View style={styles.first}>
-        <Text onPress={()=>{navigation.goBack()}}><FontAwesome size={28} name='angle-left'/></Text>
-        <Text onPress={satrtcreate} style={{width:50,height:22,backgroundColor:'#3D89FB',color:'white',borderRadius:7,textAlign:'center'}}>发布</Text>
+        <Text onPress={()=>{navigation.goBack()}}><FontAwesome size={35} name='angle-left'/></Text>
+        <View style={{width:60,height:32,backgroundColor:'#3D89FB',borderRadius:10,}}>
+        <Text onPress={satrtcreate} style={{color:'white',textAlign:'center',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:16,marginTop:4}}>发布</Text> 
+        </View>
     </View>
     </View>
 
   <ScrollView>
   <View style={{height:30,backgroundColor:'white',position:'absolute',width:'100%'}}></View>
+ 
+ {questionstyle.length === 0 && 
+ <Text style={{textAlign:'center',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:20,marginTop:'65%'}}>这里还没有题目</Text>
+ }
 
   {questionstyle.map(item => {
   switch(item.Variety) {
@@ -120,12 +128,20 @@ export default function SendPage() {
   }
 })}
   
+  
   </ScrollView>
-  {<View style={{height:70,width:"100%",backgroundColor:'white',marginBottom:'0%'}}>
+  <View style={{height:80,position:'absolute',bottom:5,left:'15%',right:'15%'}}>
    <View style={styles.add}>
-    <Text onPress={() => navigation.navigate('addquestion')} style={{textAlign:'center',marginTop:20,color:'white'}}>添加题目</Text>
+    <View style={{width:25,height:25,marginTop:19,marginLeft:70}}>
+    <Image 
+    source={require('../img/pic22.png')} 
+    style={{width: '100%', height: '100%'}}
+    />  
+    </View>
+   
+    <Text onPress={() => navigation.navigate('addquestion')} style={{margin:'auto',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:24,marginLeft:8}}>添加题目</Text>
    </View> 
-  </View>}
+  </View>
     </>
   ); 
   }
@@ -136,7 +152,7 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:'row',
         justifyContent:'space-between',
-        padding:25
+        padding:25,
     },inputContainer: {
         marginLeft: '5%',
         marginRight: '5%',
@@ -200,10 +216,11 @@ const styles = StyleSheet.create({
         borderRadius:12,
         backgroundColor:'#3D89FB',
       },add:{
-        marginLeft: '5%',
-        marginRight: '5%',
-        borderRadius: 10,
+        borderRadius: 15,
         height: 60,
-        backgroundColor: '#3D89FB',
+        backgroundColor: 'white',
+        width:'100%',
+        flexDirection:'row',
+        elevation:5
       }
 })

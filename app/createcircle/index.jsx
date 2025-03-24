@@ -35,7 +35,7 @@ export default function SendPage() {
     
     <View style={styles.third}>
       <Text style={{marginLeft:0,fontSize:20,fontWeight:700}}>圈子名称</Text>
-      <View style={{width:'100%',height:30,backgroundColor:'#EFEFEF',borderRadius:10,marginTop:7}}>
+      <View style={{width:'100%',height:40,backgroundColor:'#EFEFEF',borderRadius:10,marginTop:7}}>
       <TextInput value={sheetname} onChangeText={setSheetname} style={{marginLeft:5,fontSize:12,color:'#7F8182',marginTop:5}} placeholder='点击输入(不超过20字)'></TextInput>
       </View>
     </View>
@@ -46,14 +46,15 @@ export default function SendPage() {
       </View>
     </View>
     <View style={styles.third}>
-      <Text style={{marginLeft:0,fontSize:20,fontWeight:700}}>圈子封面</Text>
-      <View style={{width:'20%',height:20,backgroundColor:'#7F8182',borderRadius:10,marginTop:7}}>
-      <Text  onChangeText={setDiscirption} style={{marginLeft:10,fontSize:12,color:'white',marginTop:1,marginRight:10}}>点击选择</Text>
+      <Text style={{marginLeft:0,fontSize:20,fontWeight:700}}>圈子头像</Text>
+      <View style={{width:'22%',height:20,backgroundColor:'#7F8182',borderRadius:10,marginTop:7}}>
+        <View style={{width:'90%',marginLeft:'3%'}}>
+        <Text  onChangeText={setDiscirption} style={{fontSize:12,color:'white',marginTop:1,textAlign:'center'}}>点击选择</Text>  
+        </View>
       </View>
     </View>
 
-    <View style={styles.sure}><Text onPress={createcircle} style={{textAlign:'center',marginTop:10,color:'white'}}>确认</Text></View>
-    <Link href={'/circle'}>圈子入口</Link>
+    <View style={styles.sure}><Text onPress={createcircle} style={{textAlign:'center',marginTop:5,color:'white',fontFamily:'Source Han Sans-Bold',fontWeight:700,fontSize:26.5}}>确认</Text></View>
     </View>
   );
 }
@@ -65,12 +66,12 @@ const styles = StyleSheet.create({
     marginLeft:'7%',
     borderRadius:10
     },sure:{
-    marginTop:'30%',
-    marginLeft:'35%',
-    width:'30%',
-    height:40,
+    marginTop:'50%',
+    marginLeft:'37%',
+    width:'26%',
+    height:50,
     elevation:5,
     borderRadius:10,
-    backgroundColor:'blue',
+    backgroundColor:'#3D89FB',
     }
 })
